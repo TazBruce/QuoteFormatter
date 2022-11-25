@@ -17,11 +17,9 @@ def convert_csv(csv_path):
 
     output_dir = os.path.normpath(os.path.join(APP_ROOT, 'static/quote/PlumbingWorldQuote-' + str(upload_ID) + '.csv'))
     file = pd.read_csv(csv_path)
-    file = file.drop([0, 1])
-    file = file.drop(["Subtotal", "GST", "Total", "Branch", "Quote Date"], axis=1)
-    file.columns = file.iloc[0]
-    file = file.drop(file.index[0])
-    file = file.drop(file[file["Unit Nett ex GST"] == ".00"].index)
+    header = file.iloc[2]
+    file = file[3:]
+    file.columns = header
     file.to_csv(output_dir, index=False)
     return send_file(output_dir, as_attachment=True)
 
@@ -51,7 +49,8 @@ def upload():
             # Creating images
             if os.path.isfile(destination):
                 return convert_csv(destination)
-    except:
+    except Exception as error:
+        print(error.__str__())
         return render_template('failed.html')
 
 

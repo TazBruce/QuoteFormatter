@@ -2,3 +2,4 @@
 /static/quote/
 /venv/
 /.idea/
+.vercel
