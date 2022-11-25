@@ -14,7 +14,11 @@
         <div class="col"></div>
         <div class="col-10 bg-white rounded p-4">
             <h1 class="h1">Conversion Failed!</h1>
-            <p class="text-body">Make sure you're downloading PWGO branch quotes!</p>
+            <p class="text-body">
+                    {% for message in get_flashed_messages() %}
+                        {{ message }}
+                    {% endfor %}
+            </p>
             <div class="d-grid gap-2">
                 <a href="{{ url_for('main') }}" type="button" class="btn btn-primary">Try again?</a>
             </div>
